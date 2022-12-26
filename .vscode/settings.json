@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "rationalfunction.h": "c",
+        "polynomial.h": "c"
+    }
+}

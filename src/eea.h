@@ -1,0 +1,1 @@
+int gcd(int a, int b, int* x, int* y);
