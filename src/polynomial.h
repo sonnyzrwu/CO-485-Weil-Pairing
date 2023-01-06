@@ -185,8 +185,10 @@ struct Polynomial * multiply( struct Polynomial *f, struct Polynomial *g, struct
 
 
     // resize f and set f to zero polynomial
-    int newrows = ((f->rows-1) * (g->rows-1)) + 1;
-    int newcols = ((f->cols-1) * (g->cols-1)) + 1;
+    int c1 = ((f->rows) * (g->rows));
+
+    int newrows = (((f->rows) * (g->rows))) + 1;
+    int newcols = (((f->cols) * (g->cols))) + 1;
 
     printf("newrows:= %d, newcols: %d \n", newrows, newcols);
   

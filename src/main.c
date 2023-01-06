@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "miller.h"  
 
+
+
+
 int main(){
 	printf("Okay here we go... \n");
 	//struct Point generator = {11, 9, 0};
@@ -29,17 +32,33 @@ int main(){
 	mod->data[2][0] = -1;
 	mod->data[0][3] = 1;
 	mod->data[0][1] = 1; // a
+
+
+	print(poly->data, poly->rows, poly->cols);
+	print(poly2->data, poly2->rows, poly2->cols);
+	trimPolyRows(&poly->data, &poly->rows, &poly->cols);
+	trimPolyCols(&poly->data, &poly->rows, &poly->cols);
+	trimPolyRows(&poly2->data, &poly2->rows, &poly2->cols);
+	trimPolyCols(&poly2->data, &poly2->rows, &poly2->cols);
+	print(poly->data, poly->rows, poly->cols);
+	print(poly2->data, poly2->rows, poly2->cols);
 	
 	
 	
 	poly = multiply(poly, poly2, mod);// (x+1) (x+1)
 	print(poly->data, poly->rows, poly->cols);// 1 2 1
-	printf("Segfault after multiply? \n");
 	
 	poly = multiply(poly, poly2, mod);// (x+1)^2 * (x+1)
 	print(poly->data, poly->rows, poly->cols);
 
 
+	poly = multiply(poly, poly2, mod);// 
+	print(poly->data, poly->rows, poly->cols);
+
+	poly = multiply(poly, poly2, mod);// 
+	print(poly->data, poly->rows, poly->cols);
+	poly = multiply(poly, poly2, mod);// 
+	print(poly->data, poly->rows, poly->cols);
 	poly = multiply(poly, poly2, mod);// 
 	print(poly->data, poly->rows, poly->cols);
 	
