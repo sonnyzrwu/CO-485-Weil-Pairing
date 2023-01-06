@@ -173,7 +173,7 @@ void trimPolyRows(int ***data, int * rows, int * cols){
 // f = f*g, make sure f and g are not pointing to the same address.
 // if we wish square f, create another polynomial with the same data and fields as f.
 // try to reduce to keep coputations small and fast.
-struct Polynomial * multiply( struct Polynomial *f, struct Polynomial *g, struct Polynomial *modulo){
+struct Polynomial * multiply( struct Polynomial *f, struct Polynomial *g, struct Polynomial *modulo, struct EllipticCurve E){
     assert(f != g);
 
     // make a new copy of f, and copy the data to temp.
@@ -210,7 +210,9 @@ struct Polynomial * multiply( struct Polynomial *f, struct Polynomial *g, struct
             for(int k = 0; k < g->rows; ++k){
                 for(int l = 0; l < g->cols; ++l){// for every element in Q with y^k x^l
                     // contributes to y^(i+k)x^(j+l)
-                    (*data)[i+k][j+l]+= (temp->data[i][j]) * (g->data[k][l]);
+                    (*data)[i+k][j+l]+= ( (temp->data[i][j]) * (g->data[k][l]) );
+                    (*data)[i+k][j+l] = (*data)[i+k][j+l] % E.p;
+
                     
                 }
 

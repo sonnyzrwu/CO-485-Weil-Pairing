@@ -6,65 +6,50 @@
 
 int main(){
 	printf("Okay here we go... \n");
-	//struct Point generator = {11, 9, 0};
-	// struct EllipticCurve toy = {12, 1, 1, 0, generator}; 
-	//struct Point t = {2, 1, 0};
+	struct Point generator = {9, 12, 0};
+	struct EllipticCurve toy = {17, 1, 1, 1, generator}; 
 
-	struct Polynomial * poly = NULL;
-	struct Polynomial * poly2 = NULL;
-	struct Polynomial * mod = NULL;
+	struct Polynomial * linePQ = NULL;
+	linePQ = makePolynomial(linePQ, 2, 2);
+	linePQ->data[1][0] = -1;
+	linePQ->data[0][1] = 2; //slope 2
+	linePQ->data[0][0] = 3;
+
+	struct Polynomial * vertLine = NULL;
+	vertLine = makePolynomial(vertLine, 1, 2);
+	vertLine->data[0][1] = 1;
+	vertLine->data[0][0] = 1;
+
+	struct RationalFunction * F = NULL;
+	F = makeRationalFunction(F, 2, 2, 1, 2);
+	copyData(&F->f->data, linePQ);
+	copyData(&F->g->data, vertLine);
 
 
 
-	poly = makePolynomial(poly, 3, 3);
+	print(F->f->data, F->f->rows, F->f->cols);
+	print(F->g->data, F->g->rows, F->g->cols);
 
-	poly->data[0][1] = 1;
-	poly->data[1][0] = 1;
-	poly2 = makePolynomial(poly2, 3, 3);
-
-	poly2->data[0][1] = 1;
-	poly2->data[1][0] = 1;
-
-	mod = makePolynomial(mod, 3, 4);
 	
-	mod->data[0][0] = 1; // b
+	struct RationalFunction *G = NULL;
+	G = makeRationalFunction(G, 2, 2, 1, 2);
+	copyData(&G->f->data, linePQ);
+	copyData(&G->g->data, vertLine);
 	
-	mod->data[2][0] = -1;
-	mod->data[0][3] = 1;
-	mod->data[0][1] = 1; // a
 
-
-	print(poly->data, poly->rows, poly->cols);
-	print(poly2->data, poly2->rows, poly2->cols);
-	trimPolyRows(&poly->data, &poly->rows, &poly->cols);
-	trimPolyCols(&poly->data, &poly->rows, &poly->cols);
-	trimPolyRows(&poly2->data, &poly2->rows, &poly2->cols);
-	trimPolyCols(&poly2->data, &poly2->rows, &poly2->cols);
-	print(poly->data, poly->rows, poly->cols);
-	print(poly2->data, poly2->rows, poly2->cols);
+	F = multiplyRF(F, G, toy);
+	F = multiplyRF(F, G, toy);
+	F = multiplyRF(F, G, toy);
+	F = multiplyRF(F, G, toy);
+	F = multiplyRF(F, G, toy);
+	F = multiplyRF(F, G, toy);
 	
-	
-	
-	poly = multiply(poly, poly2, mod);// (x+1) (x+1)
-	print(poly->data, poly->rows, poly->cols);// 1 2 1
-	
-	poly = multiply(poly, poly2, mod);// (x+1)^2 * (x+1)
-	print(poly->data, poly->rows, poly->cols);
 
+	print(F->f->data, F->f->rows, F->f->cols);
+	print(F->g->data, F->g->rows, F->g->cols);
 
-	poly = multiply(poly, poly2, mod);// 
-	print(poly->data, poly->rows, poly->cols);
-
-	poly = multiply(poly, poly2, mod);// 
-	print(poly->data, poly->rows, poly->cols);
-	poly = multiply(poly, poly2, mod);// 
-	print(poly->data, poly->rows, poly->cols);
-	poly = multiply(poly, poly2, mod);// 
-	print(poly->data, poly->rows, poly->cols);
-	
-	destroyPolynomial(poly);
-	destroyPolynomial(poly2);
-	destroyPolynomial(mod);
-
+	destroyPolynomial(linePQ);
+	destroyPolynomial(vertLine);
+	destroyRationalFunction(F);
 	return 0;
 }
